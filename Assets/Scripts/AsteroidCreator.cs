@@ -14,13 +14,6 @@ public class AsteroidCreator : MonoBehaviour
     private float newY;
     public CameraController camContr;
     private CameraController.CameraBounds bounds;
-    /*public struct CameraBounds
-    {
-        public Vector3 BottomLeft;
-        public Vector3 TopRight;
-        public Vector3 TopLeft;
-        public Vector3 BottomRight;
-    }*/
     public Vector3 latestAsteroidPos;
     private Camera mainCamera;
     //private CameraBounds bounds;
