@@ -12,16 +12,18 @@ public class AsteroidCreator : MonoBehaviour
     public float asteroidGapYmax;
     private float newX;
     private float newY;
-    public struct CameraBounds
+    public CameraController camContr;
+    private CameraController.CameraBounds bounds;
+    /*public struct CameraBounds
     {
         public Vector3 BottomLeft;
         public Vector3 TopRight;
         public Vector3 TopLeft;
         public Vector3 BottomRight;
-    }
+    }*/
     public Vector3 latestAsteroidPos;
     private Camera mainCamera;
-    private CameraBounds bounds;
+    //private CameraBounds bounds;
 
     // Start is called before the first frame update
     void Start()
@@ -54,20 +56,10 @@ public class AsteroidCreator : MonoBehaviour
         }
         
         //  spawn another asteroid
-        CameraBounds bounds = GetCameraBounds();
+        bounds = CameraController.GetCameraBounds(camContr.GetComponent<Camera>());
         newX = RandomFloatBetween(bounds.BottomLeft.x, bounds.BottomRight.x);
         newY = latestAsteroidPos.y + RandomFloatBetween(asteroidGapYmin,asteroidGapYmax);
         SpawnObject(new Vector3(newX,newY,0));
-    }
-
-    public CameraBounds GetCameraBounds()
-    {
-        bounds.BottomLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane));
-        bounds.TopRight = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
-        bounds.TopLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, mainCamera.nearClipPlane));
-        bounds.BottomRight = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, mainCamera.nearClipPlane));
-
-        return bounds;
     }
 
     public static float DistanceY(Vector3 pos1, Vector3 pos2)

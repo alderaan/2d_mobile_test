@@ -8,6 +8,25 @@ public class CameraController : MonoBehaviour
     public float speedIncreasePerSecond = 0.1f;
     public float currentSpeed;
     public Camera mainCam;
+    public struct CameraBounds
+    {
+        public Vector3 BottomLeft;
+        public Vector3 TopRight;
+        public Vector3 TopLeft;
+        public Vector3 BottomRight;
+    }
+
+    public static CameraBounds GetCameraBounds(Camera mainCamera)
+    {
+        CameraBounds bounds;
+
+        bounds.BottomLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0));
+        bounds.TopRight = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, 0));
+        bounds.TopLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, 0));
+        bounds.BottomRight = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, 0));
+
+        return bounds;
+    }
 
     // Start is called before the first frame update
     void Start()
