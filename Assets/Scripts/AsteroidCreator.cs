@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AsteroidCreator : MonoBehaviour
 {
-    public GameObject asteroidPrefab;
+    public List<GameObject> asteroidPrefabs;
     public int poolSize = 20;
-    private Queue<GameObject> asteroidPool = new Queue<GameObject>();
+    private List<GameObject> asteroidPool = new List<GameObject>();  // Change queue to list
     public GameObject player;
     public float asteroidGapYmin;
     public float asteroidGapYmax;
@@ -16,7 +16,6 @@ public class AsteroidCreator : MonoBehaviour
     private CameraController.CameraBounds bounds;
     public Vector3 latestAsteroidPos;
     private Camera mainCamera;
-    //private CameraBounds bounds;
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +25,10 @@ public class AsteroidCreator : MonoBehaviour
         // Initialize the object pool
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject asteroid = Instantiate(asteroidPrefab);
+            int randomIndex = Random.Range(0, asteroidPrefabs.Count); // Get a random index
+            GameObject asteroid = Instantiate(asteroidPrefabs[randomIndex]); // Instantiate a random asteroid prefab
             asteroid.SetActive(false);
-            asteroidPool.Enqueue(asteroid);
+            asteroidPool.Add(asteroid); // Add it to the list
         }
 
         SpawnObject(new Vector3(0,5,0));
@@ -70,7 +70,9 @@ public class AsteroidCreator : MonoBehaviour
     {
         if (asteroidPool.Count == 0) return; // Do nothing if the pool is empty
 
-        GameObject asteroid = asteroidPool.Dequeue();
+        int randomIndex = Random.Range(0, asteroidPool.Count); // Get a random index
+        GameObject asteroid = asteroidPool[randomIndex]; // Get a random asteroid from the pool
+        asteroidPool.RemoveAt(randomIndex); // Remove this asteroid from the pool
         asteroid.transform.position = position;
         asteroid.SetActive(true);
 
@@ -80,7 +82,6 @@ public class AsteroidCreator : MonoBehaviour
     public void ReturnObjectToPool(GameObject obj)
     {
         obj.SetActive(false);
-        asteroidPool.Enqueue(obj);
+        asteroidPool.Add(obj); // Add it back to the pool
     }
-
 }
