@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     private CameraController.CameraBounds bounds;
+    public GameManager gameManager;
 
     private SpriteRenderer spriteRenderer;
 
@@ -52,7 +53,6 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Restart current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameManager.ResetGame();
     }
 }

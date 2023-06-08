@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
         public Vector3 TopLeft;
         public Vector3 BottomRight;
     }
+    public GameManager gameManager;
 
     public static CameraBounds GetCameraBounds(Camera mainCamera)
     {
@@ -32,13 +33,13 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         currentSpeed = initialSpeed;
-        //mainCam = GetComponent<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentSpeed = initialSpeed + speedIncreasePerSecond * Time.time;
+        currentSpeed = initialSpeed + speedIncreasePerSecond * gameManager.timeSinceGameStart;
         transform.position += new Vector3(0, currentSpeed * Time.deltaTime, 0);
     }
+
 }

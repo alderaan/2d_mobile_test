@@ -77,7 +77,6 @@ public class AsteroidCreator : MonoBehaviour
         asteroidPool.RemoveAt(randomIndex); 
         asteroid.transform.position = position;
         asteroid.SetActive(true);
-
         latestAsteroidPos = position;
     }
     
