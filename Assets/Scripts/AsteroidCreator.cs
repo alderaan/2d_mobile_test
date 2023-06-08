@@ -25,8 +25,8 @@ public class AsteroidCreator : MonoBehaviour
         // Initialize the object pool
         for (int i = 0; i < poolSize; i++)
         {
-            int randomIndex = Random.Range(0, asteroidPrefabs.Count);
-            GameObject asteroid = Instantiate(asteroidPrefabs[randomIndex]);
+            //int randomIndex = Random.Range(0, asteroidPrefabs.Count);
+            GameObject asteroid = Instantiate(asteroidPrefabs[i]);
             asteroid.SetActive(false);
             asteroidPool.Add(asteroid);
         }
