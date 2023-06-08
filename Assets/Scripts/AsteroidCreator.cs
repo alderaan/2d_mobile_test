@@ -6,7 +6,7 @@ public class AsteroidCreator : MonoBehaviour
 {
     public List<GameObject> asteroidPrefabs;
     public int poolSize = 20;
-    private List<GameObject> asteroidPool = new List<GameObject>();  // Change queue to list
+    private List<GameObject> asteroidPool = new List<GameObject>(); 
     public GameObject player;
     public float asteroidGapYmin;
     public float asteroidGapYmax;
@@ -25,10 +25,10 @@ public class AsteroidCreator : MonoBehaviour
         // Initialize the object pool
         for (int i = 0; i < poolSize; i++)
         {
-            int randomIndex = Random.Range(0, asteroidPrefabs.Count); // Get a random index
-            GameObject asteroid = Instantiate(asteroidPrefabs[randomIndex]); // Instantiate a random asteroid prefab
+            int randomIndex = Random.Range(0, asteroidPrefabs.Count);
+            GameObject asteroid = Instantiate(asteroidPrefabs[randomIndex]);
             asteroid.SetActive(false);
-            asteroidPool.Add(asteroid); // Add it to the list
+            asteroidPool.Add(asteroid);
         }
 
         SpawnObject(new Vector3(0,5,0));
@@ -50,7 +50,9 @@ public class AsteroidCreator : MonoBehaviour
         
         //  spawn another asteroid
         bounds = CameraController.GetCameraBounds(camContr.GetComponent<Camera>());
-        newX = RandomFloatBetween(bounds.BottomLeft.x, bounds.BottomRight.x);
+        float asteroidSize = asteroidPool[0].GetComponent<Renderer>().bounds.size.x;  // Calculate the size of the asteroid
+
+        newX = RandomFloatBetween(bounds.BottomLeft.x + asteroidSize/2, bounds.BottomRight.x - asteroidSize/2);  // Subtract/add half the asteroid size from the bounds
         newY = latestAsteroidPos.y + RandomFloatBetween(asteroidGapYmin,asteroidGapYmax);
         SpawnObject(new Vector3(newX,newY,0));
     }
@@ -68,11 +70,11 @@ public class AsteroidCreator : MonoBehaviour
     // Call this method to spawn the object at a specific position
     public void SpawnObject(Vector3 position)
     {
-        if (asteroidPool.Count == 0) return; // Do nothing if the pool is empty
+        if (asteroidPool.Count == 0) return; 
 
-        int randomIndex = Random.Range(0, asteroidPool.Count); // Get a random index
-        GameObject asteroid = asteroidPool[randomIndex]; // Get a random asteroid from the pool
-        asteroidPool.RemoveAt(randomIndex); // Remove this asteroid from the pool
+        int randomIndex = Random.Range(0, asteroidPool.Count); 
+        GameObject asteroid = asteroidPool[randomIndex]; 
+        asteroidPool.RemoveAt(randomIndex); 
         asteroid.transform.position = position;
         asteroid.SetActive(true);
 
