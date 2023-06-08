@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     private float gameStartTime;
     public float timeSinceGameStart;
+    public ScoreManager scoreManager;
     
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,9 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        // Save Highscore
+        scoreManager.SaveHighScore();
+        
         // Set new gameStartTime
         gameStartTime = Time.time;
         

@@ -21,6 +21,21 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+                spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Calculate the bottom center position of the screen
+        bounds = CameraController.GetCameraBounds(camContr.GetComponent<Camera>());
+        float halfPlayerWidth = spriteRenderer.bounds.extents.x;
+        float halfPlayerHeight = spriteRenderer.bounds.extents.y;
+        Vector3 startPosition = new Vector3(
+            bounds.Center.x,
+            bounds.BottomLeft.y + halfPlayerHeight,
+            0
+        );
+
+        // Set the player's initial position to the bottom center of the screen
+        transform.position = startPosition;
     }
 
     // Update is called once per frame

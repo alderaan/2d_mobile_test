@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
         public Vector3 TopRight;
         public Vector3 TopLeft;
         public Vector3 BottomRight;
+        public Vector3 Center;
     }
     public GameManager gameManager;
 
@@ -25,6 +26,7 @@ public class CameraController : MonoBehaviour
         bounds.TopRight = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, 0));
         bounds.TopLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, 0));
         bounds.BottomRight = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, 0));
+        bounds.Center = (bounds.BottomLeft + bounds.TopRight) / 2;
 
         return bounds;
     }
