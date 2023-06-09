@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public GameManager gameManager;
 
     private SpriteRenderer spriteRenderer;
+    public float touchSpeed;
 
     void Start()
     {
@@ -41,9 +42,26 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Get the player's input
+        #if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
+        // Existing code for desktop platforms...
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
+
+        #elif UNITY_IOS || UNITY_ANDROID
+        // Touch input for mobile platforms...
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                horizontalInput = touch.deltaPosition.x * touchSpeed;
+                verticalInput = touch.deltaPosition.y * touchSpeed;
+            }
+        }
+        #endif
+
+        // The rest of your Update method...
         constantUpwardSpeed = camContr.currentSpeed;
 
         // Calculate the new position of the ship
@@ -51,7 +69,7 @@ public class PlayerController : MonoBehaviour
             horizontalInput * moveSpeed * Time.deltaTime, 
             constantUpwardSpeed * Time.deltaTime + verticalInput * moveSpeed * Time.deltaTime,
             0
-            );
+        );
 
         // Make sure the new position isn't outside the camera's bounds
         bounds = CameraController.GetCameraBounds(camContr.GetComponent<Camera>());
