@@ -17,7 +17,7 @@ public class ScoreManager : MonoBehaviour
         highScore = PlayerPrefs.GetInt("HighScore", 0);
 
         // Update the high score text
-        highScoreText.text = "High Score: " + highScore.ToString();
+        highScoreText.text = "High: " + highScore.ToString();
     }
 
     // Update is called once per frame
