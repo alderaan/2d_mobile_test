@@ -10,28 +10,35 @@ public class AsteroidCreator : MonoBehaviour
     public GameObject player;
     public float asteroidGapYmin;
     public float asteroidGapYmax;
+    public float asteroidSizePercentageOfScreenWidth = 0.1f; // 10% of the screen width
     private float newX;
     private float newY;
     public CameraController camContr;
     private CameraController.CameraBounds bounds;
     public Vector3 latestAsteroidPos;
     private Camera mainCamera;
+    private float screenWidth;
+    private float asteroidSize;
 
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
+
+        bounds = CameraController.GetCameraBounds(camContr.GetComponent<Camera>());
+        screenWidth = bounds.TopRight.x - bounds.BottomLeft.x;
+        asteroidSize = screenWidth * asteroidSizePercentageOfScreenWidth;  // Calculate the size of the asteroid as a percentage of screen width
         
         // Initialize the object pool
         for (int i = 0; i < poolSize; i++)
         {
-            //int randomIndex = Random.Range(0, asteroidPrefabs.Count);
             GameObject asteroid = Instantiate(asteroidPrefabs[i]);
+            asteroid.transform.localScale = Vector3.one * asteroidSize / asteroid.GetComponent<Renderer>().bounds.size.x;
             asteroid.SetActive(false);
             asteroidPool.Add(asteroid);
         }
 
-        SpawnObject(new Vector3(0,5,0));
+        //SpawnObject(new Vector3(0,5,0));
     }
 
     // Update is called once per frame
@@ -50,11 +57,14 @@ public class AsteroidCreator : MonoBehaviour
         
         //  spawn another asteroid
         bounds = CameraController.GetCameraBounds(camContr.GetComponent<Camera>());
-        float asteroidSize = asteroidPool[0].GetComponent<Renderer>().bounds.size.x;  // Calculate the size of the asteroid
+        //float screenWidth = bounds.TopRight.x - bounds.BottomLeft.x;
+        //float asteroidSize = screenWidth * asteroidSizePercentageOfScreenWidth;  // Calculate the size of the asteroid as a percentage of screen width
 
         newX = RandomFloatBetween(bounds.BottomLeft.x + asteroidSize/2, bounds.BottomRight.x - asteroidSize/2);  // Subtract/add half the asteroid size from the bounds
         newY = latestAsteroidPos.y + RandomFloatBetween(asteroidGapYmin,asteroidGapYmax);
-        SpawnObject(new Vector3(newX,newY,0));
+
+        GameObject asteroid = SpawnObject(new Vector3(newX,newY,0));
+        //asteroid.transform.localScale = Vector3.one * asteroidSize / asteroid.GetComponent<Renderer>().bounds.size.x; // resize while maintaining aspect ratio
     }
 
     public static float DistanceY(Vector3 pos1, Vector3 pos2)
@@ -68,9 +78,9 @@ public class AsteroidCreator : MonoBehaviour
     }
 
     // Call this method to spawn the object at a specific position
-    public void SpawnObject(Vector3 position)
+    public GameObject SpawnObject(Vector3 position)
     {
-        if (asteroidPool.Count == 0) return; 
+        if (asteroidPool.Count == 0) return null; 
 
         int randomIndex = Random.Range(0, asteroidPool.Count); 
         GameObject asteroid = asteroidPool[randomIndex]; 
@@ -78,6 +88,7 @@ public class AsteroidCreator : MonoBehaviour
         asteroid.transform.position = position;
         asteroid.SetActive(true);
         latestAsteroidPos = position;
+        return asteroid;
     }
     
     public void ReturnObjectToPool(GameObject obj)

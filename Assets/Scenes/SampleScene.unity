@@ -774,6 +774,7 @@ MonoBehaviour:
   player: {fileID: 352529408}
   asteroidGapYmin: 5
   asteroidGapYmax: 10
+  asteroidSizePercentageOfScreenWidth: 0.25
   camContr: {fileID: 519420033}
   latestAsteroidPos: {x: 0, y: 0, z: 0}
 --- !u!4 &870646988
