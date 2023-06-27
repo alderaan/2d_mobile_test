@@ -465,8 +465,8 @@ MonoBehaviour:
   velocityFactor: 1
   moveSpeed: 10
   gameManager: {fileID: 447022435}
-  touchSpeed: 0.01
-  touchMaxSpeed: 0.1
+  touchSpeed: 0.001
+  touchMaxSpeed: 0.2
 --- !u!50 &352529413
 Rigidbody2D:
   serializedVersion: 4
