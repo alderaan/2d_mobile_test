@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     public float touchSpeed;
+    public float touchMaxSpeed;
 
     void Start()
     {
@@ -57,6 +58,8 @@ public class PlayerController : MonoBehaviour
             {
                 horizontalInput = touch.deltaPosition.x * touchSpeed;
                 verticalInput = touch.deltaPosition.y * touchSpeed;
+                horizontalInput = Mathf.Clamp(horizontalInput, -touchMaxSpeed, touchMaxSpeed);
+                verticalInput = Mathf.Clamp(verticalInput, -touchMaxSpeed, touchMaxSpeed);
             }
         }
         #endif
