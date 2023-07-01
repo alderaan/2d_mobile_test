@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public float touchSpeed;
     public float touchMaxSpeed;
+    public float rotationFactor = 1.0f;  // Adjust this in the Unity editor
+    private const float maxRotation = 45.0f;  // The maximum rotation of the spaceship
 
     void Start()
     {
@@ -69,6 +71,11 @@ public class PlayerController : MonoBehaviour
         }
         #endif
 
+         // Calculate rotation based on horizontal input
+        float targetRotation = maxRotation * horizontalInput * rotationFactor;
+        targetRotation = Mathf.Clamp(targetRotation, -maxRotation, maxRotation);
+        transform.rotation = Quaternion.Euler(0, 0, -targetRotation);  // Negative to match direction
+
         // The rest of your Update method...
         constantUpwardSpeed = camContr.currentSpeed;
 
@@ -97,3 +104,6 @@ public class PlayerController : MonoBehaviour
         gameManager.PlayerDeath();
     }
 }
+
+
+
