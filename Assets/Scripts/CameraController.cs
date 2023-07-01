@@ -40,6 +40,12 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!gameManager.isALive)
+        {
+            currentSpeed = 0;
+            return;
+        }
+
         currentSpeed = initialSpeed + speedIncreasePerSecond * gameManager.timeSinceGameStart;
         transform.position += new Vector3(0, currentSpeed * Time.deltaTime, 0);
     }

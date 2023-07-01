@@ -43,6 +43,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (! gameManager.isALive)
+        {
+            return;
+        }
+
         #if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
         // Existing code for desktop platforms...
         horizontalInput = Input.GetAxis("Horizontal");
@@ -89,6 +94,6 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        gameManager.ResetGame();
+        gameManager.PlayerDeath();
     }
 }
