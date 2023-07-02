@@ -9,6 +9,7 @@ public class ParallaxDust : MonoBehaviour
     public ParticleSystem dustParticles2;
     public CameraController cameraController;
     public float verticalBuffer;
+    public GameManager gameManager;
 
     void Start()
     {
@@ -19,12 +20,14 @@ public class ParallaxDust : MonoBehaviour
     }
     void Update()
     {
+        if (!gameManager.isALive)
+        {
+            return;
+        }
+
         // Move both systems down
         dustParticles1.transform.position += Vector3.down * speed * Time.deltaTime;
         dustParticles2.transform.position += Vector3.down * speed * Time.deltaTime;
-
-        Debug.Log($"Dust 1: {dustParticles1.transform.position.y}");
-        Debug.Log($"Dust 2: {dustParticles2.transform.position.y}");
 
         // Get the current camera bounds
         var bounds = CameraController.GetCameraBounds(cameraController.mainCam);
