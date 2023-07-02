@@ -4,35 +4,56 @@ using UnityEngine;
 
 public class ParallaxDust : MonoBehaviour
 {
-    public float speed = 0.5f; // speed of the parallax effect, adjust to your needs
-    private ParticleSystem dustParticles;
-    public CameraController cameraController; // reference to the CameraController
+    public float speed = 0.5f;
+    public ParticleSystem dustParticles1;
+    public ParticleSystem dustParticles2;
+    private bool isParticles1Active = true;
+    private bool isParticles2Active = false;
+    public CameraController cameraController;
+    public float verticalBuffer;
 
     void Start()
     {
-        dustParticles = GetComponent<ParticleSystem>();
-    }
+        var bounds = CameraController.GetCameraBounds(cameraController.mainCam);
+        dustParticles1.transform.position = new Vector3(0,bounds.BottomLeft.y + verticalBuffer,0);
+        dustParticles2.transform.position = new Vector3(0,bounds.TopLeft.y + verticalBuffer,0);
 
+    }
     void Update()
     {
-        transform.position += Vector3.down * speed * Time.deltaTime;
+        // Move both systems down
+        dustParticles1.transform.position += Vector3.down * speed * Time.deltaTime;
+        dustParticles2.transform.position += Vector3.down * speed * Time.deltaTime;
 
-        // get the current camera bounds
+        Debug.Log($"Dust 1: {dustParticles1.transform.position.y}");
+        Debug.Log($"Dust 2: {dustParticles2.transform.position.y}");
+
+        // Get the current camera bounds
         var bounds = CameraController.GetCameraBounds(cameraController.mainCam);
 
-        // reset the position of the particle system once it's off screen
-        if (transform.position.y <= bounds.BottomLeft.y)
+        // particle 1 is active and became invisible
+        if (dustParticles1.transform.position.y <= bounds.BottomLeft.y - verticalBuffer)
         {
-            // reset position to top of camera view
-            transform.position = new Vector3(transform.position.x, bounds.TopLeft.y, transform.position.z);
-            
-            // clear the current particles so it looks like a new batch
-            dustParticles.Stop();
-            dustParticles.Clear();
-
-            // restart the particle system
-            dustParticles.Play();
+            ResetParticleSystem(dustParticles1, bounds.TopLeft.y + verticalBuffer);
         }
+        if (dustParticles2.transform.position.y <= bounds.BottomLeft.y - verticalBuffer)
+        {
+            ResetParticleSystem(dustParticles2, bounds.TopLeft.y + verticalBuffer);
+        }
+
+    }
+
+    void ResetParticleSystem(ParticleSystem ps, float resetHeight)
+    {
+        // Stop the particle system and clear the current particles
+        ps.Stop();
+        ps.Clear();
+
+        // Reset position to top of camera view
+        ps.transform.position = new Vector3(ps.transform.position.x, resetHeight, ps.transform.position.z);
+
+        // Restart the particle system
+        ps.Play();
     }
 }
 
