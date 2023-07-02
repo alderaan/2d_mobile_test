@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16bd56fa963f744e19f966c1564a7b73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialSpeed: 5
+  initialSpeed: 2
   speedIncreasePerSecond: 0.1
   currentSpeed: 0
   mainCam: {fileID: 519420031}
@@ -726,11 +726,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorPalette:
-  - {r: 0.3301887, g: 0.18534178, b: 0.18534178, a: 0}
-  - {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 0}
-  - {r: 0.41509432, g: 0.3426486, b: 0.3426486, a: 0}
-  - {r: 0.509434, g: 0.25711998, b: 0.3995394, a: 0}
-  transitionTime: 5
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.010012457, g: 0.010012457, b: 0.23584908, a: 0}
+  - {r: 0.21062548, g: 0.011764709, b: 0.23529412, a: 0}
+  - {r: 0.23529412, g: 0.011764709, b: 0.045940597, a: 1}
+  - {r: 0.011764709, g: 0.23355164, b: 0.23529412, a: 1}
+  transitionTime: 15
 --- !u!1 &566600745
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,14 +847,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidPrefabs:
   - {fileID: 5237546069908001893, guid: e0d6c92234b0342329382bbd924f7ea2, type: 3}
-  - {fileID: 5237546069908001893, guid: e77d9a064e5fb4420bce455d98ed3e78, type: 3}
   - {fileID: 5237546069908001893, guid: f9c574bc2eea54b48a74f3a3405728ee, type: 3}
   - {fileID: 5237546069908001893, guid: a4f3b8537b17b4118a4fe252e3b19de2, type: 3}
-  poolSize: 4
+  - {fileID: 5237546069908001893, guid: e0d6c92234b0342329382bbd924f7ea2, type: 3}
+  - {fileID: 5237546069908001893, guid: f9c574bc2eea54b48a74f3a3405728ee, type: 3}
+  - {fileID: 5237546069908001893, guid: a4f3b8537b17b4118a4fe252e3b19de2, type: 3}
+  poolSize: 6
   player: {fileID: 352529408}
-  asteroidGapYmin: 5
-  asteroidGapYmax: 10
-  asteroidSizePercentageOfScreenWidth: 0.25
+  asteroidGapYmin: 4
+  asteroidGapYmax: 8
+  asteroidSizePctOfScreenMin: 0.3
+  asteroidSizePctOfScreenMax: 0.5
   camContr: {fileID: 519420033}
   latestAsteroidPos: {x: 0, y: 0, z: 0}
 --- !u!4 &870646988
@@ -1079,11 +1083,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 0.05
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
+      propertyPath: InitialModule.startSize.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7897736395798724514, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
       propertyPath: m_SortingLayer
@@ -1490,11 +1510,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 0.05
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
+      propertyPath: InitialModule.startSize.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897736395798724445, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7897736395798724514, guid: b45d60afa6ea94449b92257c59a42579, type: 3}
       propertyPath: m_SortingLayer

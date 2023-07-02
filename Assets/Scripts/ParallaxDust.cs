@@ -7,8 +7,6 @@ public class ParallaxDust : MonoBehaviour
     public float speed = 0.5f;
     public ParticleSystem dustParticles1;
     public ParticleSystem dustParticles2;
-    private bool isParticles1Active = true;
-    private bool isParticles2Active = false;
     public CameraController cameraController;
     public float verticalBuffer;
 

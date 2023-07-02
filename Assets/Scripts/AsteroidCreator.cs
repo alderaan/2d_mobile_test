@@ -10,7 +10,8 @@ public class AsteroidCreator : MonoBehaviour
     public GameObject player;
     public float asteroidGapYmin;
     public float asteroidGapYmax;
-    public float asteroidSizePercentageOfScreenWidth = 0.1f; // 10% of the screen width
+    public float asteroidSizePctOfScreenMin;
+    public float asteroidSizePctOfScreenMax;
     private float newX;
     private float newY;
     public CameraController camContr;
@@ -27,13 +28,12 @@ public class AsteroidCreator : MonoBehaviour
 
         bounds = CameraController.GetCameraBounds(camContr.GetComponent<Camera>());
         screenWidth = bounds.TopRight.x - bounds.BottomLeft.x;
-        asteroidSize = screenWidth * asteroidSizePercentageOfScreenWidth;  // Calculate the size of the asteroid as a percentage of screen width
+          // Calculate the size of the asteroid as a percentage of screen width
         
         // Initialize the object pool
         for (int i = 0; i < poolSize; i++)
         {
             GameObject asteroid = Instantiate(asteroidPrefabs[i]);
-            asteroid.transform.localScale = Vector3.one * asteroidSize / asteroid.GetComponent<Renderer>().bounds.size.x;
             asteroid.SetActive(false);
             asteroidPool.Add(asteroid);
         }
@@ -87,6 +87,11 @@ public class AsteroidCreator : MonoBehaviour
         asteroidPool.RemoveAt(randomIndex); 
         asteroid.transform.position = position;
         asteroid.SetActive(true);
+
+        float pctSize = Random.Range(asteroidSizePctOfScreenMin, asteroidSizePctOfScreenMax);
+        asteroidSize = screenWidth * pctSize;
+        asteroid.transform.localScale = Vector3.one * asteroidSize / asteroid.GetComponent<Renderer>().bounds.size.x;
+
         latestAsteroidPos = position;
         return asteroid;
     }
