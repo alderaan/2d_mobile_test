@@ -6,28 +6,23 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public CameraController camContr;
-    public Rigidbody2D myRigidbody;
-    public float velocityFactor;
-
     public float moveSpeed = 10.0f; // The speed at which the ship moves horizontally/vertically
     private float constantUpwardSpeed;
     private float horizontalInput;
     private float verticalInput;
     private CameraController.CameraBounds bounds;
     public GameManager gameManager;
-
     private SpriteRenderer spriteRenderer;
-    public float touchSpeed;
-    public float touchMaxSpeed;
+    public float touchSpeedVert;
+    public float touchSpeedHoriz;
     public float rotationFactor = 1.0f;  // Adjust this in the Unity editor
     private const float maxRotation = 45.0f;  // The maximum rotation of the spaceship
     public bl_Joystick Joystick;
+    public float smoothTime = 0.3f;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-                spriteRenderer = GetComponent<SpriteRenderer>();
 
         // Calculate the bottom center position of the screen
         bounds = CameraController.GetCameraBounds(camContr.GetComponent<Camera>());
@@ -35,7 +30,7 @@ public class PlayerController : MonoBehaviour
         float halfPlayerHeight = spriteRenderer.bounds.extents.y;
         Vector3 startPosition = new Vector3(
             bounds.Center.x,
-            bounds.BottomLeft.y + halfPlayerHeight,
+            bounds.BottomLeft.y + halfPlayerHeight * 5f,
             0
         );
 
@@ -51,31 +46,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        verticalInput = Joystick.Vertical * 0.1f; //get the vertical value of joystick
-        horizontalInput = Joystick.Horizontal * 0.1f;//get the horizontal value of joystick
-
-        //#if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
-        // Existing code for desktop platforms...
-        //horizontalInput = Input.GetAxis("Horizontal");
-        //verticalInput = Input.GetAxis("Vertical");
-
-
-
-        //#elif UNITY_IOS || UNITY_ANDROID
-        // Touch input for mobile platforms...
-        /*if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Moved)
-            {
-                horizontalInput = touch.deltaPosition.x * touchSpeed;
-                verticalInput = touch.deltaPosition.y * touchSpeed;
-                horizontalInput = Mathf.Clamp(horizontalInput, -touchMaxSpeed, touchMaxSpeed);
-                verticalInput = Mathf.Clamp(verticalInput, -touchMaxSpeed, touchMaxSpeed);
-            }
-        }
-        #endif*/
+        verticalInput = Joystick.Vertical * touchSpeedVert;
+        horizontalInput = Joystick.Horizontal * touchSpeedHoriz;
 
          // Calculate rotation based on horizontal input
         float targetRotation = maxRotation * horizontalInput * rotationFactor;
@@ -99,10 +71,11 @@ public class PlayerController : MonoBehaviour
         float halfPlayerHeight = spriteRenderer.bounds.extents.y;
 
         newPosition.x = Mathf.Clamp(newPosition.x, bounds.BottomLeft.x + halfPlayerWidth, bounds.TopRight.x - halfPlayerWidth);
-        newPosition.y = Mathf.Clamp(newPosition.y, bounds.BottomLeft.y + halfPlayerHeight, bounds.TopRight.y - halfPlayerHeight);
+        newPosition.y = Mathf.Clamp(newPosition.y, bounds.BottomLeft.y + halfPlayerHeight * 5f, bounds.TopRight.y - halfPlayerHeight);
 
         // Move the ship to the new position
         transform.position = newPosition;
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
