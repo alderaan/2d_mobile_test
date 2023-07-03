@@ -820,11 +820,11 @@ MonoBehaviour:
   camContr: {fileID: 519420033}
   moveSpeed: 5
   gameManager: {fileID: 447022435}
-  touchSpeedVert: 0.1
-  touchSpeedHoriz: 0.15
-  rotationFactor: 0.8
+  touchSpeedVert: 0
+  touchSpeedHoriz: 0.17
+  rotationFactor: 1
   Joystick: {fileID: 508838049}
-  smoothTime: 0.3
+  inputSmoothTime: 0.2
 --- !u!50 &352529413
 Rigidbody2D:
   serializedVersion: 4

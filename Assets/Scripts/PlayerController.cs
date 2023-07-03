@@ -18,7 +18,10 @@ public class PlayerController : MonoBehaviour
     public float rotationFactor = 1.0f;  // Adjust this in the Unity editor
     private const float maxRotation = 45.0f;  // The maximum rotation of the spaceship
     public bl_Joystick Joystick;
-    public float smoothTime = 0.3f;
+    public float inputSmoothTime = 1f;
+    private float horizontalVelocity = 0.0f;
+    private float verticalVelocity = 0.0f;
+
 
     void Start()
     {
@@ -46,8 +49,15 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        verticalInput = Joystick.Vertical * touchSpeedVert;
-        horizontalInput = Joystick.Horizontal * touchSpeedHoriz;
+        //verticalInput = Joystick.Vertical * touchSpeedVert;
+        //horizontalInput = Joystick.Horizontal * touchSpeedHoriz;
+
+        float targetHorizontalInput = Joystick.Horizontal * touchSpeedHoriz;
+        float targetVerticalInput = Joystick.Vertical * touchSpeedVert;
+
+        horizontalInput = Mathf.SmoothDamp(horizontalInput, targetHorizontalInput, ref horizontalVelocity, inputSmoothTime);
+        verticalInput = Mathf.SmoothDamp(verticalInput, targetVerticalInput, ref verticalVelocity, inputSmoothTime);
+
 
          // Calculate rotation based on horizontal input
         float targetRotation = maxRotation * horizontalInput * rotationFactor;
