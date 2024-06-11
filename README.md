@@ -1,8 +1,19 @@
-# 2d_mobile_test
+# Topdown Space Game
 
-About this project
-- This is a very simple, small topdown space game
-- This was a weekend project to get into the habit of building small games end-to-end
-- This was also used to test how helpful ChatGPT 4 is nowaways in building games with Unity/C#
-  - It turns out very helpful. Severy important mechanics, including rotating the ship when moving horizontally were 99% written by ChatGPT
-- See how it looks [on Youtube](https://youtube.com/shorts/sslnOS0SHE8?feature=share)
+## About this project
+
+- A small game project, to get used to making many small games end-to-end
+- I tested out how easily I can make simple game graphics using Midjourney. Result: They were simple enough to make but consistency was still tricky: Creating the space ship, the asteroids and the explosion in the same style required several iterations. Midjourney also did not always listen to my commands the way I wanted to. (This was in August 2023. Need to revisit how the tech has evolved.)
+<div align="center">
+<img src="./gameplay.gif" alt="Gameplay" height="400">
+</div>
+
+## Platforms
+
+- The game is built for Android
+- The game can also be tested on Unity Desktop
+
+## How to play
+
+- Avoid the asteroids as the ships gets faster and faster.
+- Stear the space ship using the virtual joystick on Unity Desktop or the touch controls on Android.
