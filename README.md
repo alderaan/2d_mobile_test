@@ -1,4 +1,4 @@
-# Topdown Space Game
+# Asteroid Evasion
 
 <div align="center">
 <img src="./gameplay.gif" alt="Gameplay" height="500">
